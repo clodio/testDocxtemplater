@@ -3,11 +3,9 @@ var Docxtemplater = require('docxtemplater');
 var JSZip = require('jszip');
 var ImageModule=require('docxtemplater-image-module')
 
-//exempleImageCarte
 var content = fs.readFileSync(__dirname+"/imageExample.docx","binary");
 
-var opts = {};
-opts = {
+var opts = {
   getImage: function (tagValue) {
     return fs.readFileSync(tagValue, "binary");
   },
@@ -19,11 +17,10 @@ opts = {
 
 var imageModule=new ImageModule(opts);
 
-var data = { image: 'examples/image.png' }
 var zip = new JSZip(content);
 var docx=new Docxtemplater()
     .loadZip(zip)
-    .setData(data)
+    .setData({ image: 'examples/image.png' })
     .attachModule(imageModule)
     .render();
 
@@ -31,5 +28,6 @@ var buffer= docx
         .getZip()
         .generate({type:"nodebuffer"});
         console.log(docx)
+
 fs.writeFile("imageExample_output.docx",buffer);
 
