@@ -3,7 +3,7 @@ var Docxtemplater = require('docxtemplater');
 var JSZip = require('jszip');
 var ImageModule=require('docxtemplater-image-module')
 
-var content = fs.readFileSync(__dirname+"/imageExample.docx","binary");
+var content = fs.readFileSync(__dirname+"/imageExample.pptx","binary");
 
 var opts = {
   getImage: function (tagValue) {
@@ -21,6 +21,7 @@ var zip = new JSZip(content);
 var docx=new Docxtemplater()
     .loadZip(zip)
     .setData({ image: 'examples/image.png' })
+    .setOptions({fileType:'pptx'})
     .attachModule(imageModule)
     .render();
 
@@ -29,5 +30,5 @@ var buffer= docx
         .generate({type:"nodebuffer"});
         console.log(docx)
 
-fs.writeFile("imageExample_output.docx",buffer);
+fs.writeFile("imageExample_output.pptx",buffer);
 
